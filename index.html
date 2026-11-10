@@ -162,6 +162,20 @@ dialog.lb button{background:none;border:0;color:var(--cyan);font:inherit;cursor:
 .film .m b{font-weight:400;color:var(--c)}
 .book-meta{border:1px solid var(--line);border-inline-start:3px solid var(--cyan);padding:16px 20px;margin-bottom:26px;color:var(--mute);font-size:15.5px;background:rgba(109,51,201,.1)}
 .book-meta strong{color:var(--star);font-weight:500}
+
+
+/*PLSTART*/
+.pl-box{border:1px solid var(--line);background:rgba(12,7,34,.7);padding:18px 14px 8px;clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px))}
+.pl-svg{width:100%;height:auto;display:block}
+.pl-svg .pg{cursor:pointer;transition:opacity .25s}
+.pl-svg.sel .pg:not(.on){opacity:.35}
+.pl-svg .pg.on circle.body{stroke:var(--star);stroke-width:2}
+.pl-btns{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.pl-btns button{font:inherit;font-size:14.5px;color:var(--star);background:rgba(109,51,201,.15);border:1px solid var(--line);padding:7px 14px;cursor:pointer}
+.pl-btns button[aria-pressed="true"]{border-color:var(--cyan);color:var(--cyan);background:rgba(69,214,230,.12)}
+.pl-info{border-inline-start:3px solid var(--magenta);padding:12px 18px;margin:6px 0 14px;color:var(--mute);font-size:15.5px;line-height:1.9;min-height:5.6em}
+.pl-info b{color:var(--star);font-weight:500}
+/*PLEND*/
 @media (max-width:760px){.skygrid{grid-template-columns:1fr;gap:24px}.calc .row{grid-template-columns:1fr}.calc{padding:20px}.tonight{grid-template-columns:1fr;gap:28px}.mag{grid-template-columns:1fr}.story.top{padding:24px}nav{gap:16px;font-size:14px}.about{grid-template-columns:1fr}.hud{padding:32px 26px}.entries li{grid-template-columns:1fr;gap:4px}section{padding:54px 0}}
 @media (prefers-reduced-motion:reduce){.hero h1{animation:none}html{scroll-behavior:auto}}
 </style>
@@ -333,7 +347,7 @@ dialog.lb button{background:none;border:0;color:var(--cyan);font:inherit;cursor:
 <article class="film"><h4>الكون أكبر من عمره</h4><div class="m">من الكتاب، <b>ص 386 و390</b></div><p>نرى الأجرام البعيدة كما كانت قبل مليارات السنين، لأن ضوءها يحتاج وقتًا ليصل. وعمر الكون نحو 13.75 مليار سنة، لكن حجمه المرئي نحو مئة مليار سنة ضوئية. لا تناقض هنا، لأن الفضاء نفسه يتمدد وليس الأجرام وحدها.</p></article>
 <article class="film"><h4>وحش في قلب مجرتنا</h4><div class="m">من الكتاب، <b>ص 390</b></div><p>في منتصف مجرة درب التبانة ثقب أسود تفوق كتلته كتلة الشمس بنحو أربعة ملايين مرة. وهو مثال على أن قوانين نيوتن تكفي لوصف أغلب الكون، لكن حين تزيد الكثافة كثيرًا نحتاج النسبية العامة.</p></article>
 <article class="film"><h4>أكبر خطأ لأينشتاين؟</h4><div class="m">من الكتاب، <b>ص 395</b></div><p>استنتج أينشتاين من معادلاته أن الكون يتمدد، لكنه لم يصدق ذلك، فأضاف حدًا جديدًا ليبقي الكون ثابتًا. وبعد قياسات هابل سمّاه «أكبر خطأ». والمفارقة أن القياسات الحديثة تحتاج هذا الحد فعلًا، أي «الثابت الكوني».</p></article>
-<article class="film"><h4>كم عمر الكون؟</h4><div class="m">من الكتاب، <b>ص 395 و396</b></div><p>تقول المؤلفة إنها استيقظت وهي طفلة على خبر أن عمر الكون تضاعف فجأة، لأن قياسات التمدد كانت غير دقيقة. واليوم قاسته فريق ويندي فريدمان وآخرون، فصرنا نعرف أنه نحو 13.75 مليار سنة، بهامش خطأ نحو مئتي مليون سنة.</p></article>
+<article class="film"><h4>كم عمر الكون؟</h4><div class="m">من الكتاب، <b>ص 395 و396</b></div><p>تقول المؤلفة إنها استيقظت وهي طفلة على خبر أن عمر الكون تضاعف فجأة، لأن قياسات التمدد كانت غير دقيقة. واليوم، وبعد قياسات فريق ويندي فريدمان وآخرين، صرنا نعرف أنه نحو 13.75 مليار سنة، بهامش خطأ نحو مئتي مليون سنة.</p></article>
 <article class="film"><h4>ضجيج الحمام</h4><div class="m">من الكتاب، <b>ص 396 إلى 398</b></div><p>عام 1964 التقط عالمان في مختبرات بل ضجيجًا ثابتًا في هوائيهما لا يعرفان مصدره. جرّبا كل تفسير ممكن، حتى تنظيف فضلات الحمام، لكنه لم يتوقف. تبيّن أنه إشعاع الخلفية الكوني، بقايا الانفجار العظيم، بحرارة نحو 2.7 كلفن، أي أقل من ثلاث درجات فوق الصفر المطلق، ونالا عليه نوبل.</p></article>
 <article class="film"><h4>المادة التي لا نراها</h4><div class="m">من الكتاب، <b>ص 409 إلى 411</b></div><p>لاحظ زفيكي عام 1933 أن المجرات في العناقيد تدور أسرع مما تسمح به كتلتها المرئية. ثم أثبتت فيرا روبين أن النجوم البعيدة في المجرة تدور بالسرعة نفسها تقريبًا، فهناك مادة غير مرئية تجذبها. وكتلتها نحو ستة أضعاف المادة التي نراها.</p></article>
 <article class="film"><h4>عنقود الطلقة</h4><div class="m">من الكتاب، <b>ص 412 و413</b></div><p>اصطدم عنقودان من المجرات فبقي الغاز الساخن في منطقة التصادم، بينما خرجت المادة المظلمة منها لأنها لا تتفاعل بقوة. وكشف ذلك انحناء الضوء حولها، فهو يتتبع الجاذبية ولو لم يكن هناك ما يضيء. وهو من أقوى الأدلة على وجود المادة المظلمة.</p></article>
@@ -343,6 +357,33 @@ dialog.lb button{background:none;border:0;color:var(--cyan);font:inherit;cursor:
 <article class="film"><h4>هل يبتلع المصادم الأرض؟</h4><div class="m">من الكتاب، <b>ص 195 إلى 197</b></div><p>قبل تشغيل المصادم خاف بعض الناس أن يصنع ثقوبًا سوداء تبتلع الأرض، ووصل الأمر إلى رفع دعوى قضائية في هاواي لمنع تشغيله. تقول المؤلفة إنها شرحت لمن سألها أنه لا خطر، وإن الدراسات الدقيقة لا تدعم هذا الخوف، وإن علينا أن نقلق من أمور أخرى أولًا.</p></article>
 </div>
 <p class="mag-note">ملخصات مختصرة بصياغتي وبلغة مبسطة. الأرقام كما وردت في الكتاب وقت تأليفه، وقد تتغير مع القياسات الجديدة. للنص الأصلي ارجع إلى الصفحة المذكورة بجانب كل بطاقة.</p>
+</div></section>
+
+<section id="dk"><div class="wrap">
+<h2>من موسوعة «الفضاء»</h2>
+<div class="book-meta"><strong>Space!</strong> من دار DK بالتعاون مع مؤسسة سميثسونيان، الطبعة الأمريكية الأولى 2015. موسوعة مصوّرة بالإنجليزية، وهذه ملخصات لأمتع ما فيها بالعربية وبصياغتي.</div>
+<div class="films">
+<article class="film"><h4>الزهرة: فرن بسحب حمضية</h4><div class="m">من الموسوعة، <b>ص 18</b></div><p>الزهرة قريبة من الأرض في الحجم، لكن سطحها أسخن سطح بين الكواكب، نحو 460 درجة مئوية، وضغط جوّها 92 ضعف ضغط الأرض، يسحق سيارة كاملة. غلافها نحو 97% ثاني أكسيد الكربون وسحبها من حمض الكبريتيك، وتدور عكس اتجاه معظم الكواكب. ولديها براكين أكثر من أي كوكب آخر في المجموعة الشمسية.</p></article>
+<article class="film"><h4>آيو: القمر البركاني</h4><div class="m">من الموسوعة، <b>ص 48</b></div><p>لم يُعثر على فوهات اصطدام على سطح آيو، لأن الحمم والرماد تغطي أي ندبة بسرعة. وقد تقذف ثورانه موادّ مئات الكيلومترات في الفضاء. وفيه أكثر من مئة جبل، وجاذبية المشتري تشدّ سطحه وترخيه فيعلو ويهبط.</p></article>
+<article class="film"><h4>حلقات زحل</h4><div class="m">من الموسوعة، <b>ص 52</b></div><p>حلقات زحل عرضها آلاف الأميال لكن سمكها بضعة أمتار فقط، وهي حطام جليدي يدور حوله، قد يكون بقايا قمر تفتّت قديمًا. تتراوح قطعها من حبيبات صغيرة إلى صخور بحجم منزل. والفراغ الأكبر بينها يسمى «فجوة كاسيني» وصنعته جاذبية القمر ميماس. ولكل الكواكب الغازية حلقات، لكنها أخفت كثيرًا من حلقات زحل.</p></article>
+<article class="film"><h4>تيتان: عالم مغطى بضباب برتقالي</h4><div class="m">من الموسوعة، <b>ص 58</b></div><p>أكبر أقمار زحل، فيه هواء غني بالنيتروجين وجبال وأنهار وبحيرات، لكن البحيرات ليست ماء بل مواد كربونية مثل الإيثان. يغطيه ضباب برتقالي يخفي سطحه، فرأت مركبة كاسيني تضاريسه بالرادار. وفي يناير 2005 هبط عليه المسبار هيغنز وأرسل أول صور لسطحه.</p></article>
+<article class="film"><h4>نبتون: كوكب اكتُشف بالحساب</h4><div class="m">من الموسوعة، <b>ص 62</b></div><p>لاحظ الفلكيون أن أورانوس ينحرف عن مساره المتوقع كأن جاذبية كوكب خفي تشدّه، فحسبوا مكانه ووجّهوا التلسكوب فوجدوا نبتون عام 1846. زاره مسبار واحد فقط هو فوياجر 2 عام 1989. وهو أبعد الكواكب، يبعد عن الشمس نحو ثلاثين ضعف بُعد الأرض.</p></article>
+<article class="film"><h4>المذنبات: رحّالة من ثلج وغبار</h4><div class="m">من الموسوعة، <b>ص 66</b></div><p>المذنب كتلة قديمة من الجليد والغبار بقيت من السحابة التي تكوّنت منها الكواكب. إذا اقترب من الشمس سخن جليده وانطلق غاز وغبار يكوّنان الغيبوبة والذيل. وكان الناس يخافونه قرونًا ويعدّونه نذير شؤم. ونواته من أغمق ما في المجموعة الشمسية، أغمق من الفحم.</p></article>
+<article class="film"><h4>رحلة مركبة روزيتا</h4><div class="m">من الموسوعة، <b>ص 66</b></div><p>المذنب 67P عرضه نحو خمسة كيلومترات، وزارته المركبة الأوروبية روزيتا عام 2014. أنزلت عليه المسبار فيلاي، وهو أول هبوط ناعم على نواة مذنب. لكن الحربة التي تثبّته لم تنطلق، فارتدّ مئات الأمتار في الفضاء مرتين قبل أن يستقر.</p></article>
+<article class="film"><h4>النجم النيوتروني</h4><div class="m">من الموسوعة، <b>ص 86</b></div><p>حين ينفجر نجم عملاق، قلب النجم الأكبر ينهار ثقبًا أسود، وقلب الأصغر ينكمش بحجم مدينة ويصير نجمًا نيوترونيًا. يحمل كتلة الشمس كلها في مساحة أصغر من لندن، وملعقة منه أثقل من أكبر ناقلة نفط. بعضها يدور 700 مرة في الثانية، وما يومض منها كالمنارة يسمى نجمًا نابضًا.</p></article>
+<article class="film"><h4>الثقب الأسود</h4><div class="m">من الموسوعة، <b>ص 88</b></div><p>هو جسم جاذبيته قوية لدرجة أن شيئًا لا يفلت منه، ولا الضوء. يتكوّن عادةً حين ينفد وقود نجم ضخم وينفجر، فينهار قلبه في أجزاء من الثانية. وحدّه الذي لا عودة بعده يسمى «أفق الحدث». ويُقدَّر أن في مجرتنا عشرات الملايين منها، وأحدها قد يكون على بعد نحو ثلاثة آلاف سنة ضوئية.</p></article>
+<article class="film"><h4>المشتري الحار</h4><div class="m">من الموسوعة، <b>ص 78</b></div><p>من الكواكب خارج المجموعة الشمسية ما يشبه المشتري لكنه يلتصق بنجمه. الكوكب HD 189733 b يكمل دورة حول نجمه كل 2.2 يوم فقط. اكتشفه الفلكيون من خفوت بسيط في ضوء النجم كلما مرّ أمامه، ووجدوا في غلافه بخار ماء بكمية كبيرة.</p></article>
+</div>
+<p class="mag-note">لا أعرض صور الكتاب هنا لأنها محمية بحقوق النشر. أرقام الكتاب كما وردت فيه، وللتفاصيل ارجع إلى الصفحة المذكورة.</p>
+</div></section>
+
+<section id="scale"><div class="wrap">
+<h2>أحجام الكواكب</h2>
+<p class="mag-note" style="margin-top:0">الأقطار هنا بمقياس رسم واحد. اضغط على كوكب لترى حجمه وبعده ووقت وصول ضوء الشمس إليه.</p>
+<div class="pl-box"><svg class="pl-svg" id="plsvg" viewBox="0 0 820 300" role="img" aria-label="مقارنة أحجام الكواكب"></svg></div>
+<div class="pl-btns" id="plbtns"></div>
+<div class="pl-info" id="plinfo" aria-live="polite">اختر كوكبًا.</div>
+<p class="mag-note">رسم أصلي من تصميمي. الأقطار والأبعاد تقريبية.</p>
 </div></section>
 
 <section id="deep"><div class="wrap">
@@ -586,6 +627,45 @@ off.addEventListener("input",draw);lines.addEventListener("change",draw);names.a
 document.getElementById("skynow").addEventListener("click",function(){base=Date.now();off.value=0;draw()});
 addEventListener("resize",function(){size();draw()});
 tip.textContent=DEF;size();draw();
+})();
+</script>
+<script id="plscript">
+(function(){
+var P=[
+{n:"عطارد",d:4879,au:0.39,c:"#a79fcb"},
+{n:"الزهرة",d:12104,au:0.72,c:"#e8c07a"},
+{n:"الأرض",d:12742,au:1,c:"#3b82f6"},
+{n:"المريخ",d:6779,au:1.52,c:"#e2704f"},
+{n:"المشتري",d:139820,au:5.2,c:"#d9a87a"},
+{n:"زحل",d:116460,au:9.58,c:"#e8d49a",ring:1},
+{n:"أورانوس",d:50724,au:19.2,c:"#7fe0e8"},
+{n:"نبتون",d:49244,au:30.07,c:"#5b7cff"}];
+var svg=document.getElementById("plsvg"),btns=document.getElementById("plbtns"),info=document.getElementById("plinfo");
+var NS="http://www.w3.org/2000/svg",sc=190/139820,W=820,gap=16,x=14,base=150,els=[],bs=[];
+function f(n){return Math.round(n).toLocaleString("en-US")}
+function lt(au){var m=au*499/60;return m<90?"نحو "+(m<10?m.toFixed(1):Math.round(m))+" دقيقة":"نحو "+(m/60).toFixed(1)+" ساعة"}
+function sel(i){
+  svg.classList.add("sel");
+  els.forEach(function(e,k){e.classList.toggle("on",k===i)});
+  bs.forEach(function(b,k){b.setAttribute("aria-pressed",k===i?"true":"false")});
+  var q=P[i],r=q.d/12742,rs=r<1?"أصغر من الأرض، نحو "+r.toFixed(2)+" من قطرها":(r===1?"هذه أرضنا":"نحو "+r.toFixed(1)+" ضعف قطر الأرض");
+  var v=Math.pow(r,3),vs=v>1.5?"، ويتسع لنحو "+f(v)+" أرض":"";
+  info.innerHTML="<b>"+q.n+"</b>: قطره نحو "+f(q.d)+" كم ("+rs+")"+vs+". يبعد عن الشمس نحو "+f(q.au*149.6)+" مليون كم، وضوء الشمس يصله في "+lt(q.au)+".";
+}
+P.forEach(function(q,i){
+  var r=q.d*sc/2,g=document.createElementNS(NS,"g");g.setAttribute("class","pg");g.setAttribute("tabindex","0");
+  var cx=W-(x+r);
+  if(q.ring){var e=document.createElementNS(NS,"ellipse");e.setAttribute("cx",cx);e.setAttribute("cy",base);e.setAttribute("rx",r*1.95);e.setAttribute("ry",r*.42);e.setAttribute("fill","none");e.setAttribute("stroke","#e8d49a");e.setAttribute("stroke-opacity",".55");e.setAttribute("stroke-width",r*.18);e.setAttribute("transform","rotate(14 "+cx+" "+base+")");g.appendChild(e)}
+  var c=document.createElementNS(NS,"circle");c.setAttribute("class","body");c.setAttribute("cx",cx);c.setAttribute("cy",base);c.setAttribute("r",Math.max(r,2.5));c.setAttribute("fill",q.c);g.appendChild(c);
+  var t=document.createElementNS(NS,"text");t.setAttribute("x",cx);t.setAttribute("y",base+Math.max(r,8)+(q.ring?r*.6:0)+18);t.setAttribute("text-anchor","middle");t.setAttribute("fill","#a79fcb");t.setAttribute("font-size",r<20?"11":"14");
+  if(r>=14||i===2){t.textContent=q.n;g.appendChild(t)}
+  g.addEventListener("click",function(){sel(i)});
+  g.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();sel(i)}});
+  svg.appendChild(g);els.push(g);
+  x+=q.d*sc+gap+(q.ring?r*.95:0);
+  var b=document.createElement("button");b.type="button";b.textContent=q.n;b.setAttribute("aria-pressed","false");b.addEventListener("click",function(){sel(i)});btns.appendChild(b);bs.push(b);
+});
+sel(2);
 })();
 </script>
 </body>
