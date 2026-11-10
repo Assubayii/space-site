@@ -142,7 +142,23 @@ dialog.lb button{background:none;border:0;color:var(--cyan);font:inherit;cursor:
 .film .m{color:var(--mute);font-size:14px;margin-bottom:12px}
 .film dl{margin:0}.film dt{font-size:14px;color:var(--c);margin-top:10px}
 .film dd{margin:0;color:var(--star);font-size:15.5px;line-height:1.85}
-@media (max-width:760px){.calc .row{grid-template-columns:1fr}.calc{padding:20px}.tonight{grid-template-columns:1fr;gap:28px}.mag{grid-template-columns:1fr}.story.top{padding:24px}nav{gap:16px;font-size:14px}.about{grid-template-columns:1fr}.hud{padding:32px 26px}.entries li{grid-template-columns:1fr;gap:4px}section{padding:54px 0}}
+.skygrid{display:grid;grid-template-columns:minmax(0,640px) 1fr;gap:36px;align-items:start}
+#skycv{width:100%;aspect-ratio:1/1;display:block;background:var(--void);border:1px solid var(--line);cursor:crosshair}
+.sky-tip{min-height:3.4em;margin:12px 0 0;color:var(--star);font-size:16px}
+.sky-ctl{display:flex;align-items:center;gap:12px;margin-top:8px;flex-wrap:wrap}
+.sky-ctl label{color:var(--cyan);font-size:14px}
+.sky-ctl input[type=range]{flex:1;min-width:140px;accent-color:var(--cyan)}
+.sky-ctl output{min-width:9em;font-size:15px}
+.sky-ctl button{font:inherit;font-size:14px;color:var(--cyan);background:none;border:1.5px solid var(--cyan);padding:4px 16px;cursor:pointer}
+.sky-ctl button:hover{background:var(--cyan);color:var(--void)}
+.sky-opts{display:flex;gap:22px;margin-top:12px;font-size:15px;color:var(--mute);flex-wrap:wrap}
+.sky-opts input{accent-color:var(--cyan);margin-inline-end:6px}
+.sky-status{margin:0 0 18px;padding:12px 16px;border:1px solid var(--line);background:rgba(109,51,201,.12);font-size:15.5px}
+.skyside h3{font-size:24px;margin-bottom:10px}
+#skylist{list-style:none;margin:0 0 14px;padding:0}
+#skylist li{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15.5px}
+#skylist li span{color:var(--mute);white-space:nowrap}
+@media (max-width:760px){.skygrid{grid-template-columns:1fr;gap:24px}.calc .row{grid-template-columns:1fr}.calc{padding:20px}.tonight{grid-template-columns:1fr;gap:28px}.mag{grid-template-columns:1fr}.story.top{padding:24px}nav{gap:16px;font-size:14px}.about{grid-template-columns:1fr}.hud{padding:32px 26px}.entries li{grid-template-columns:1fr;gap:4px}section{padding:54px 0}}
 @media (prefers-reduced-motion:reduce){.hero h1{animation:none}html{scroll-behavior:auto}}
 </style>
 </head>
@@ -176,6 +192,25 @@ dialog.lb button{background:none;border:0;color:var(--cyan);font:inherit;cursor:
 <div>
 <ul class="events" id="events"></ul>
 <p class="tonight-note">طور القمر محسوب تقريبيًا داخل الصفحة، وأحداث الشهر من <a href="https://www.farmersalmanac.com/?p=443870" target="_blank" rel="noopener noreferrer">Farmers' Almanac</a> ونشرة ناسا. مواعيد الذروة تقريبية.</p>
+</div>
+</div>
+</div></section>
+
+<section id="skymap"><div class="wrap">
+<h2>خارطة السماء</h2>
+<p class="gallery-note">هكذا تبدو السماء فوق الطائف في هذه اللحظة. حرّك المؤشر أو المس نجمًا لتعرف اسمه، واسحب الشريط لترى السماء في ساعات أخرى.</p>
+<div class="skygrid">
+<div class="skybox">
+<canvas id="skycv" role="img" aria-label="خارطة تفاعلية للسماء فوق الطائف، مركزها سمت الرأس وحافتها الأفق"></canvas>
+<p class="sky-tip" id="skytip" aria-live="polite"></p>
+<div class="sky-ctl"><label for="skyoff">الوقت</label><input type="range" id="skyoff" min="-12" max="12" step="0.25" value="0"><output id="skyout" for="skyoff"></output><button type="button" id="skynow">الآن</button></div>
+<div class="sky-opts"><label><input type="checkbox" id="skylines" checked>خطوط الأبراج</label><label><input type="checkbox" id="skynames" checked>الأسماء</label></div>
+</div>
+<div class="skyside">
+<p class="sky-status" id="skystatus"></p>
+<h3>الأبرز في السماء الآن</h3>
+<ul id="skylist"></ul>
+<p class="tonight-note">مركز الخارطة هو نقطة فوق رأسك، وحافتها الأفق. الشرق على اليسار كما تراه وأنت تنظر إلى السماء. تعرض الخارطة النجوم الألمع والقمر فقط، والكواكب غير معروضة. الحسابات تقريبية للعرض والتعلم.</p>
 </div>
 </div>
 </div></section>
@@ -273,7 +308,7 @@ dialog.lb button{background:none;border:0;color:var(--cyan);font:inherit;cursor:
 <h3 class="sub">ملفات الخيال العلمي</h3>
 <p class="gallery-note" style="margin-top:0">أفلام عن الفضاء، وما فيها من خيال وما فيها من علم.</p>
 <div class="films">
-<article class="film"><h4>2001: أوديسا الفضاء</h4><div class="m">1968، إخراج ستانلي كوبريك</div><dl><dt>في الفيلم</dt><dd>حاسوب ذكي اسمه HAL 9000 يتحكم في المركبة، ثم يخالف أوامر الطاقم.</dd><dt>في الواقع</dt><dd>تخيّل الفيلم محطة فضائية تدور حول نفسها لتصنع جاذبية صناعية، وهي فكرة يدرسها مهندسو الفضاء حتى اليوم.</dd></dl></article>
+<article class="film"><h4>أوديسا الفضاء 2001</h4><div class="m">1968، إخراج ستانلي كوبريك</div><dl><dt>في الفيلم</dt><dd>حاسوب ذكي اسمه HAL 9000 يتحكم في المركبة، ثم يخالف أوامر الطاقم.</dd><dt>في الواقع</dt><dd>تخيّل الفيلم محطة فضائية تدور حول نفسها لتصنع جاذبية صناعية، وهي فكرة يدرسها مهندسو الفضاء حتى اليوم.</dd></dl></article>
 <article class="film"><h4>تواصل (Contact)</h4><div class="m">1997، إخراج روبرت زيميكس، عن رواية كارل ساغان</div><dl><dt>في الفيلم</dt><dd>عالمة تلتقط رسالة من حضارة قرب النجم فيغا، ثم تُبنى آلة تنقلها إلى هناك.</dd><dt>في الواقع</dt><dd>البحث عن إشارات راديو من الفضاء حقيقي، ويقوم به معهد سيتي (SETI) منذ عقود.</dd></dl></article>
 <article class="film"><h4>بين النجوم (Interstellar)</h4><div class="m">2014، إخراج كريستوفر نولان</div><dl><dt>في الفيلم</dt><dd>رحلة عبر ثقب دودي بحثًا عن كوكب جديد يعيش عليه البشر.</dd><dt>في الواقع</dt><dd>شكل الثقب الأسود في الفيلم حُسب بمعادلات فيزيائية بإشراف الفيزيائي كيب ثورن، وتمدد الزمن قرب الأجرام الضخمة ظاهرة حقيقية مقيسة.</dd></dl></article>
 <article class="film"><h4>جاذبية (Gravity)</h4><div class="m">2013، إخراج ألفونسو كوارون</div><dl><dt>في الفيلم</dt><dd>حطام يضرب المكوك فتبقى رائدة فضاء تائهة في المدار.</dd><dt>في الواقع</dt><dd>حطام المدارات مشكلة حقيقية، ومتلازمة كيسلر تصف تصادمات متتابعة تضاعف الحطام حتى يصعب استخدام المدار.</dd></dl></article>
@@ -364,6 +399,133 @@ o.textContent=(n>=1?"نحو ":"")+t+" "+word(n,i);
 var light=+v.value>299000;
 h.textContent=light?"هذه أسرع سرعة ممكنة حسب الفيزياء المعروفة، ومع ذلك تبقى النجوم بعيدة. لهذا تلجأ الأفلام إلى الثقوب الدودية والسرعة الفائقة.":"جرّب سرعة الضوء لترى الحد الأقصى الذي تسمح به الفيزياء المعروفة.";}
 d.addEventListener("change",calc);v.addEventListener("change",calc);calc();
+})();
+</script>
+<script>
+(function(){
+var LAT=21.2703,LON=40.4158,RAD=Math.PI/180,S={},MON=["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+function s(k,h,m,d,g,n){S[k]={ra:(h+m/60)*15,dec:d,mag:g,name:n||""}}
+s("sirius",6,45.15,-16.72,-1.46,"الشعرى اليمانية");s("canopus",6,23.96,-52.70,-0.74,"سهيل");s("arcturus",14,15.66,19.18,-0.05,"السماك الرامح");
+s("vega",18,36.94,38.78,0.03,"النسر الواقع");s("capella",5,16.69,45.998,0.08,"العيوق");s("rigel",5,14.53,-8.20,0.13);
+s("procyon",7,39.30,5.225,0.34,"الشعرى الشامية");s("betelgeuse",5,55.17,7.407,0.5,"منكب الجوزاء");s("altair",19,50.78,8.868,0.76,"النسر الطائر");
+s("aldebaran",4,35.93,16.51,0.86,"الدبران");s("antares",16,29.41,-26.43,1.06,"قلب العقرب");s("spica",13,25.20,-11.16,0.97,"السماك الأعزل");
+s("pollux",7,45.32,28.026,1.14,"رأس التوأم المؤخر");s("fomalhaut",22,57.65,-29.62,1.16,"فم الحوت");s("deneb",20,41.43,45.28,1.25,"ذنب الدجاجة");
+s("regulus",10,8.37,11.967,1.35,"قلب الأسد");s("castor",7,34.60,31.888,1.58,"رأس التوأم المقدم");s("bellatrix",5,25.13,6.35,1.64);
+s("elnath",5,26.30,28.61,1.65);s("alnilam",5,36.21,-1.20,1.69);s("alnitak",5,40.76,-1.943,1.77);s("mintaka",5,32.00,-0.299,2.2);
+s("saiph",5,47.76,-9.67,2.06);s("meissa",5,35.14,9.93,3.3);s("polaris",2,31.82,89.264,1.98,"النجم القطبي");
+s("dubhe",11,3.73,61.75,1.79);s("merak",11,1.84,56.38,2.37);s("phecda",11,53.83,53.69,2.44);s("megrez",12,15.43,57.03,3.31);
+s("alioth",12,54.04,55.96,1.77);s("mizar",13,23.93,54.93,2.27);s("alkaid",13,47.54,49.31,1.86);
+s("schedar",0,40.51,56.54,2.24);s("caph",0,9.17,59.15,2.27);s("gammacas",0,56.71,60.72,2.47);s("ruchbah",1,25.82,60.24,2.68);s("segin",1,54.64,63.67,3.38);
+s("shaula",17,33.60,-37.10,1.62,"الشولة");s("graffias",16,5.44,-19.81,2.62);s("dschubba",16,0.34,-22.62,2.32);s("sigmasco",16,21.19,-25.59,2.9);
+s("tausco",16,35.9,-28.22,2.82);s("epssco",16,50.17,-34.29,2.29);s("mu1sco",16,51.88,-38.05,3.0);s("zeta2sco",16,53.99,-42.36,3.6);
+s("etasco",17,12.15,-43.24,3.33);s("thetasco",17,37.32,-43.0,1.87);s("iotasco",17,47.6,-40.13,3.0);s("kappasco",17,42.49,-39.03,2.4);
+s("sadr",20,22.23,40.26,2.2);s("gienah",20,46.21,33.97,2.46);s("albireo",19,30.73,27.96,3.1);s("deltacyg",19,44.97,45.13,2.87);
+s("sheliak",18,50.08,33.36,3.5);s("sulafat",18,58.96,32.69,3.24);s("tarazed",19,46.26,10.61,2.72);s("alshain",19,55.31,6.41,3.71);
+s("etaleo",10,7.33,16.76,3.5);s("algieba",10,19.97,19.84,2.28);s("adhafera",10,16.7,23.42,3.4);s("rasalas",9,52.77,26.0,3.88);s("algenubi",9,45.85,23.77,2.98);
+s("zosma",11,14.11,20.52,2.56);s("denebola",11,49.06,14.57,2.14,"ذنب الأسد");s("chertan",11,14.07,15.43,3.3);
+s("mebsuta",6,43.93,25.13,3.0);s("tejat",6,22.97,22.51,2.88);s("propus",6,14.88,22.51,3.3);s("wasat",7,20.12,21.98,3.5);s("mekbuda",7,4.12,20.57,3.9);s("alhena",6,37.72,16.40,1.93);
+s("gtau",4,19.8,15.63,3.65);s("th2",4,28.7,15.87,3.4);s("ain",4,28.62,19.18,3.5);s("ztau",5,37.64,21.14,3.0);s("alcyone",3,47.5,24.1,2.87,"الثريا");
+s("menkalinan",5,59.53,44.95,1.9);s("mahasim",5,59.7,37.21,2.62);s("hassaleh",4,56.98,33.17,2.7);
+s("mirzam",6,22.7,-17.96,1.98,"المرزم");s("adhara",6,58.64,-28.97,1.5,"عذارى");s("wezen",7,8.4,-26.39,1.84);s("aludra",7,24.1,-29.30,2.45);s("gomeisa",7,27.15,8.29,2.9);
+s("markab",23,4.76,15.21,2.49);s("scheat",23,3.78,28.08,2.42);s("algenib",0,13.24,15.18,2.83);s("alpheratz",0,8.38,29.09,2.06,"سرة الفرس");
+s("mirach",1,9.73,35.62,2.06);s("almach",2,3.9,42.33,2.1);s("algol",3,8.2,40.96,2.1,"رأس الغول");s("mirfak",3,24.3,49.86,1.79);
+s("muphrid",13,54.7,18.4,2.7);s("izar",14,45.0,27.07,2.37);s("seginus",14,32.1,38.31,3.0);s("nekkar",15,1.9,40.39,3.5);
+s("alnasl",18,5.8,-30.42,3.0);s("kausA",18,24.2,-34.38,1.8);s("kausM",18,21.0,-29.83,2.7);s("kausB",18,27.97,-25.42,2.8);
+s("ascella",19,2.6,-29.88,2.6);s("tausgr",19,6.9,-27.67,3.3);s("nunki",18,55.3,-26.30,2.05);s("phisgr",18,45.7,-26.99,3.2);
+s("diphda",0,43.6,-17.99,2.0);s("menkar",3,2.3,4.09,2.5);
+var C=[
+["الجبار",[["betelgeuse","meissa","bellatrix"],["betelgeuse","alnitak","saiph","rigel","mintaka","bellatrix"],["alnitak","alnilam","mintaka"]]],
+["الثور",[["gtau","th2","aldebaran","ztau"],["th2","ain","elnath"]]],
+["الجوزاء",[["castor","mebsuta","tejat","propus"],["pollux","wasat","mekbuda","alhena"],["castor","pollux"]]],
+["ممسك الأعنة",[["capella","menkalinan","mahasim","elnath","hassaleh","capella"]]],
+["الدب الأكبر",[["dubhe","merak","phecda","megrez","dubhe"],["megrez","alioth","mizar","alkaid"]]],
+["ذات الكرسي",[["caph","schedar","gammacas","ruchbah","segin"]]],
+["الدجاجة",[["deneb","sadr","albireo"],["gienah","sadr","deltacyg"]]],
+["القيثارة",[["vega","sheliak","sulafat"]]],
+["العقاب",[["tarazed","altair","alshain"]]],
+["الأسد",[["regulus","etaleo","algieba","adhafera","rasalas","algenubi"],["algieba","zosma","denebola","chertan","zosma"],["chertan","regulus"]]],
+["العقرب",[["graffias","dschubba","sigmasco","antares","tausco","epssco","mu1sco","zeta2sco","etasco","thetasco","iotasco","kappasco","shaula"]]],
+["القوس",[["alnasl","kausA","ascella","tausgr","nunki","phisgr","kausB","kausM","kausA"],["ascella","phisgr"]]],
+["الكلب الأكبر",[["mirzam","sirius","wezen","adhara"],["wezen","aludra"]]],
+["الكلب الأصغر",[["procyon","gomeisa"]]],
+["الفرس الأعظم",[["markab","scheat","alpheratz","algenib","markab"]]],
+["المرأة المسلسلة",[["alpheratz","mirach","almach"]]],
+["حامل رأس الغول",[["algol","mirfak"]]],
+["الراعي",[["muphrid","arcturus","izar","seginus","nekkar"]]]
+];
+var inC={};C.forEach(function(c){c[1].forEach(function(ch){ch.forEach(function(k){inC[k]=c[0]})})});
+var DSO=[{n:"مجرة المرأة المسلسلة",ra:(0+42.7/60)*15,dec:41.27},{n:"سديم الجبار",ra:(5+35.4/60)*15,dec:-5.39}];
+var DIR=["شمال","شمال شرق","شرق","جنوب شرق","جنوب","جنوب غرب","غرب","شمال غرب"];
+function dir(a){return DIR[Math.round(a/45)%8]}
+function jd(ms){return ms/864e5+2440587.5}
+function altaz(ra,dec,J){var g=(280.46061837+360.98564736629*(J-2451545)+LON)%360,H=(g-ra)*RAD,d=dec*RAD,f=LAT*RAD;
+var alt=Math.asin(Math.sin(f)*Math.sin(d)+Math.cos(f)*Math.cos(d)*Math.cos(H));
+var az=Math.atan2(-Math.sin(H)*Math.cos(d),Math.sin(d)*Math.cos(f)-Math.cos(d)*Math.sin(f)*Math.cos(H));
+return {alt:alt/RAD,az:((az/RAD)%360+360)%360}}
+function sunEq(J){var n=J-2451545,L=(280.460+0.9856474*n)%360,g=((357.528+0.9856003*n)%360)*RAD,lam=(L+1.915*Math.sin(g)+0.020*Math.sin(2*g))*RAD,e=(23.439-4e-7*n)*RAD;
+return {ra:(Math.atan2(Math.cos(e)*Math.sin(lam),Math.cos(lam))/RAD+360)%360,dec:Math.asin(Math.sin(e)*Math.sin(lam))/RAD,lam:lam/RAD}}
+function moonEq(J){var d=J-2451545,L=(218.316+13.176396*d)%360,M=((134.963+13.064993*d)%360)*RAD,F=((93.272+13.22935*d)%360)*RAD,lam=(L+6.289*Math.sin(M))*RAD,b=5.128*Math.sin(F)*RAD,e=23.439*RAD;
+var x=Math.cos(lam)*Math.cos(b),y=Math.sin(lam)*Math.cos(b)*Math.cos(e)-Math.sin(b)*Math.sin(e),z=Math.sin(lam)*Math.cos(b)*Math.sin(e)+Math.sin(b)*Math.cos(e);
+return {ra:(Math.atan2(y,x)/RAD+360)%360,dec:Math.asin(z)/RAD,lam:lam/RAD}}
+/*TEST*/window.__sky={altaz:altaz,sunEq:sunEq,moonEq:moonEq,S:S,jd:jd};/*END*/
+var cv=document.getElementById("skycv"),ctx=cv.getContext("2d"),off=document.getElementById("skyoff"),out=document.getElementById("skyout"),tip=document.getElementById("skytip"),
+lines=document.getElementById("skylines"),names=document.getElementById("skynames"),list=document.getElementById("skylist"),stat=document.getElementById("skystatus");
+var base=Date.now(),W=640,hits=[],DEF="المس نجمًا أو حرّك المؤشر فوقه لمعرفة اسمه.";
+var ANCH=[[-18,"#05030f","#0d0a2a"],[-6,"#0f0c33","#6b2f6e"],[0,"#26407f","#e08a4a"],[8,"#3d6fb8","#9cc3ef"]];
+function hx(c){return [parseInt(c.substr(1,2),16),parseInt(c.substr(3,2),16),parseInt(c.substr(5,2),16)]}
+function mix(a,b,t){a=hx(a);b=hx(b);return "rgb("+a.map(function(v,i){return Math.round(v+(b[i]-v)*t)}).join(",")+")"}
+function bg(sa){if(sa<=ANCH[0][0])return [ANCH[0][1],ANCH[0][2]];if(sa>=ANCH[3][0])return [ANCH[3][1],ANCH[3][2]];
+for(var i=0;i<3;i++){var A=ANCH[i],B=ANCH[i+1];if(sa<=B[0]){var t=(sa-A[0])/(B[0]-A[0]);return [mix(A[1],B[1],t),mix(A[2],B[2],t)]}}}
+function size(){var dpr=Math.min(window.devicePixelRatio||1,2);W=cv.clientWidth||640;cv.width=W*dpr;cv.height=W*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
+function fmtT(ms){var d=new Date(ms+3*36e5),h=d.getUTCHours(),m=d.getUTCMinutes(),ap=h>=12?"م":"ص",h12=h%12||12;return h12+":"+(m<10?"0":"")+m+" "+ap}
+function dayLbl(ms){var a=new Date(ms+3*36e5),b=new Date(base+3*36e5),da=Date.UTC(a.getUTCFullYear(),a.getUTCMonth(),a.getUTCDate()),db=Date.UTC(b.getUTCFullYear(),b.getUTCMonth(),b.getUTCDate()),n=Math.round((da-db)/864e5);return n==0?"":n==1?" (غدًا)":n==-1?" (أمس)":""}
+function draw(){
+var t=base+(+off.value)*36e5,J=jd(t),sun=sunEq(J),sa=altaz(sun.ra,sun.dec,J),cx=W/2,R=W/2-38,hasLines=lines.checked,hasNames=names.checked;
+hits=[];ctx.clearRect(0,0,W,W);var LB=[],fs=(W<480?12:13)+"px Rubik,sans-serif",fc=(W<480?12:14)+"px Rubik,sans-serif";
+function P(a){var r=(90-a.alt)/90*R,az=a.az*RAD;return [cx-r*Math.sin(az),cx-r*Math.cos(az)]}
+var g=bg(sa.alt),gr=ctx.createRadialGradient(cx,cx,0,cx,cx,R);gr.addColorStop(0,g[0]);gr.addColorStop(1,g[1]);
+ctx.save();ctx.beginPath();ctx.arc(cx,cx,R,0,7);ctx.fillStyle=gr;ctx.fill();ctx.clip();
+ctx.strokeStyle="rgba(130,110,220,.22)";ctx.lineWidth=1;[30,60].forEach(function(a){ctx.beginPath();ctx.arc(cx,cx,(90-a)/90*R,0,7);ctx.stroke()});
+var sk=Math.max(0,Math.min(1,(-sa.alt-2)/10)),pos={};
+Object.keys(S).forEach(function(k){var o=S[k],a=altaz(o.ra,o.dec,J);pos[k]=a;a.xy=P(a)});
+if(hasLines&&sk>0.03){ctx.strokeStyle="rgba(69,214,230,"+(0.38*sk)+")";ctx.lineWidth=1.2;
+C.forEach(function(c){c[1].forEach(function(ch){ctx.beginPath();var pen=false;ch.forEach(function(k){var a=pos[k];if(a.alt<-1){pen=false;return}if(!pen){ctx.moveTo(a.xy[0],a.xy[1]);pen=true}else ctx.lineTo(a.xy[0],a.xy[1])});ctx.stroke()})})}
+ctx.font="13px Rubik,sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";
+if(sk>0.03){Object.keys(S).forEach(function(k){var o=S[k],a=pos[k];if(a.alt<0)return;var r=Math.max(.9,2.7-o.mag*.8),x=a.xy[0],y=a.xy[1];
+var gl=ctx.createRadialGradient(x,y,0,x,y,r*3.2);gl.addColorStop(0,"rgba(241,238,255,"+(0.55*sk)+")");gl.addColorStop(1,"rgba(241,238,255,0)");ctx.fillStyle=gl;ctx.beginPath();ctx.arc(x,y,r*3.2,0,7);ctx.fill();
+ctx.fillStyle="rgba(255,252,240,"+sk+")";ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();
+hits.push({x:x,y:y,n:o.name||("نجم في "+(inC[k]||"السماء")),a:a});
+if(hasNames&&o.name&&o.mag<(W<480?1.4:2.6))LB.push({p:o.mag,t:o.name,x:x,y:y-r-9,c:"rgba(241,238,255,"+(0.9*sk)+")",f:fs})});
+DSO.forEach(function(d){var a=altaz(d.ra,d.dec,J);if(a.alt<2)return;var xy=P(a);ctx.strokeStyle="rgba(226,80,159,"+sk+")";ctx.lineWidth=1.6;ctx.beginPath();ctx.arc(xy[0],xy[1],6,0,7);ctx.stroke();
+hits.push({x:xy[0],y:xy[1],n:d.n+" (جرم بعيد)",a:a});if(hasNames)LB.push({p:.5,t:d.n,x:xy[0],y:xy[1]+17,c:"rgba(236,110,175,"+sk+")",f:fs})});
+if(hasNames){C.forEach(function(c){var sx=0,sy=0,n=0,tot=0;c[1].forEach(function(ch){ch.forEach(function(k){tot++;var a=pos[k];if(a.alt>5){sx+=a.xy[0];sy+=a.xy[1];n++}})});
+if(n>=Math.max(3,tot*.6))LB.push({p:1.8,t:c[0],x:sx/n,y:sy/n+22,c:"rgba(69,214,230,"+(0.9*sk)+")",f:fc})})}}
+LB.sort(function(a,b){return a.p-b.p});var placed=[];ctx.textAlign="center";ctx.textBaseline="middle";
+LB.forEach(function(l){ctx.font=l.f;var w=ctx.measureText(l.t).width+6,r={x:l.x-w/2,y:l.y-9,w:w,h:18},ok=r.x>cx-R-12&&r.x+r.w<cx+R+12;
+placed.forEach(function(q){if(r.x<q.x+q.w&&r.x+r.w>q.x&&r.y<q.y+q.h&&r.y+r.h>q.y)ok=false});if(ok){placed.push(r);ctx.fillStyle=l.c;ctx.fillText(l.t,l.x,l.y)}});
+var me=moonEq(J),ma=altaz(me.ra,me.dec,J),el=(me.lam-sun.lam)*RAD,ill=(1-Math.cos(el))/2;
+if(sa.alt>-3){var q=P(sa);if(sa.alt>-1){var gs=ctx.createRadialGradient(q[0],q[1],0,q[0],q[1],38);gs.addColorStop(0,"rgba(255,220,120,.9)");gs.addColorStop(1,"rgba(255,180,60,0)");ctx.fillStyle=gs;ctx.beginPath();ctx.arc(q[0],q[1],38,0,7);ctx.fill();ctx.fillStyle="#fff3c4";ctx.beginPath();ctx.arc(q[0],q[1],9,0,7);ctx.fill();hits.push({x:q[0],y:q[1],n:"الشمس",a:sa});
+if(hasNames){ctx.fillStyle="#fff3c4";ctx.font="14px Rubik,sans-serif";ctx.fillText("الشمس",q[0],q[1]+22)}}}
+if(ma.alt>-1){var mq=P(ma),mg=ctx.createRadialGradient(mq[0],mq[1],0,mq[0],mq[1],30);mg.addColorStop(0,"rgba(241,238,255,"+(0.25+0.5*ill)+")");mg.addColorStop(1,"rgba(241,238,255,0)");ctx.fillStyle=mg;ctx.beginPath();ctx.arc(mq[0],mq[1],30,0,7);ctx.fill();
+ctx.fillStyle="rgba(235,232,250,"+(0.35+0.65*ill)+")";ctx.beginPath();ctx.arc(mq[0],mq[1],8,0,7);ctx.fill();ctx.strokeStyle="rgba(241,238,255,.8)";ctx.lineWidth=1;ctx.stroke();
+hits.push({x:mq[0],y:mq[1],n:"القمر (يضيء نحو "+Math.round(ill*100)+"٪)",a:ma});if(hasNames){ctx.fillStyle="#f1eeff";ctx.font="14px Rubik,sans-serif";ctx.fillText("القمر",mq[0],mq[1]+20)}}
+ctx.restore();
+ctx.strokeStyle="rgba(69,214,230,.7)";ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(cx,cx,R,0,7);ctx.stroke();
+ctx.fillStyle="#a79fcb";ctx.font="15px Rubik,sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";
+ctx.fillText("شمال",cx,18);ctx.fillText("جنوب",cx,W-18);ctx.fillText("شرق",22,cx);ctx.fillText("غرب",W-22,cx);
+out.textContent=fmtT(t)+dayLbl(t);
+var st=sa.alt>0?"الشمس فوق الأفق، فالنجوم غير مرئية":sa.alt>-6?"الشفق المدني: ما زالت الشمس قريبة من الأفق":sa.alt>-12?"الشفق البحري: تظهر ألمع النجوم":sa.alt>-18?"الشفق الفلكي: السماء تقترب من العتمة":"ليل كامل: أفضل وقت للرصد";
+stat.textContent=st+(ma.alt>0?". القمر فوق الأفق ويضيء نحو "+Math.round(ill*100)+"٪":". القمر تحت الأفق");
+var arr=[];Object.keys(S).forEach(function(k){var o=S[k],a=pos[k];if(o.name&&a.alt>8)arr.push({n:o.name,m:o.mag,a:a})});arr.sort(function(x,y){return x.m-y.m});
+var h="";if(sa.alt>-6)h='<li>النجوم تظهر بعد الغروب</li>';else{arr.slice(0,7).forEach(function(o){h+="<li>"+o.n+"<span>"+dir(o.a.az)+"، ارتفاع "+Math.round(o.a.alt)+"°</span></li>"});if(!arr.length)h="<li>لا نجوم لامعة مسمّاة فوق الأفق الآن</li>"}
+list.innerHTML=h}
+function near(e){var r=cv.getBoundingClientRect(),x=(e.clientX-r.left)*W/r.width,y=(e.clientY-r.top)*W/r.height,b=null,bd=18;hits.forEach(function(o){var d=Math.hypot(o.x-x,o.y-y);if(d<bd){bd=d;b=o}});
+tip.textContent=b?b.n+" | "+dir(b.a.az)+"، ارتفاع "+Math.round(b.a.alt)+"°":DEF}
+cv.addEventListener("pointermove",near);cv.addEventListener("pointerdown",near);cv.addEventListener("pointerleave",function(){tip.textContent=DEF});
+off.addEventListener("input",draw);lines.addEventListener("change",draw);names.addEventListener("change",draw);
+document.getElementById("skynow").addEventListener("click",function(){base=Date.now();off.value=0;draw()});
+addEventListener("resize",function(){size();draw()});
+tip.textContent=DEF;size();draw();
 })();
 </script>
 </body>
