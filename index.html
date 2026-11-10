@@ -86,7 +86,26 @@ dialog.lb button{background:none;border:0;color:var(--cyan);font:inherit;cursor:
 .story .src{margin-top:auto;font-size:14px;display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--mute)}
 .story .src a{color:var(--cyan);text-underline-offset:4px}
 .mag-note{color:var(--mute);font-size:14px;margin:22px 0 0}
-@media (max-width:760px){.mag{grid-template-columns:1fr}.story.top{padding:24px}nav{gap:16px;font-size:14px}.about{grid-template-columns:1fr}.hud{padding:32px 26px}.entries li{grid-template-columns:1fr;gap:4px}section{padding:54px 0}}
+.tonight{display:grid;grid-template-columns:260px 1fr;gap:40px;align-items:start}
+.moon-card{text-align:center}
+.moon-card svg{width:150px;height:150px;display:block;margin:0 auto 14px;filter:drop-shadow(0 0 26px rgba(241,238,255,.28))}
+.moon-card h3{font-size:30px;margin-bottom:4px}
+.moon-card p{margin:0;color:var(--mute);font-size:15.5px;line-height:1.8}
+.moon-card .next{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.events{list-style:none;margin:0;padding:0;position:relative}
+.events::before{content:"";position:absolute;top:10px;bottom:10px;right:7px;width:1px;background:var(--line)}
+.events li{position:relative;padding:0 34px 22px 0}
+.events li::before{content:"";position:absolute;right:0;top:9px;width:15px;height:15px;border-radius:50%;background:var(--void);border:2px solid var(--cyan)}
+.events li.now::before{background:var(--magenta);border-color:var(--magenta);box-shadow:0 0 16px var(--magenta)}
+.events li.past{opacity:.45}.events li.past::before{border-color:var(--mute)}
+.events b{font-family:"Aref Ruqaa",serif;font-size:22px;font-weight:700}
+.events .d{color:var(--cyan);font-size:14.5px}
+.events .chip{display:inline-block;margin-inline-start:10px;padding:0 10px;font-size:13px;border:1px solid var(--line);border-radius:999px;color:var(--mute)}
+.events li.now .chip{border-color:var(--magenta);color:var(--magenta)}
+.events p{margin:2px 0 0;color:var(--mute);font-size:15.5px;max-width:38em}
+.tonight-note{color:var(--mute);font-size:14px;margin:6px 0 0}
+.tonight-note a{color:var(--cyan);text-underline-offset:4px}
+@media (max-width:760px){.tonight{grid-template-columns:1fr;gap:28px}.mag{grid-template-columns:1fr}.story.top{padding:24px}nav{gap:16px;font-size:14px}.about{grid-template-columns:1fr}.hud{padding:32px 26px}.entries li{grid-template-columns:1fr;gap:4px}section{padding:54px 0}}
 @media (prefers-reduced-motion:reduce){.hero h1{animation:none}html{scroll-behavior:auto}}
 </style>
 </head>
@@ -108,6 +127,22 @@ dialog.lb button{background:none;border:0;color:var(--cyan);font:inherit;cursor:
 </header>
 
 <main>
+<section id="tonight"><div class="wrap">
+<h2>سماء الليلة في الطائف</h2>
+<div class="tonight">
+<div class="moon-card" aria-live="polite">
+<svg id="moon" viewBox="0 0 120 120" role="img" aria-label="شكل القمر الليلة"></svg>
+<h3 id="moon-name">القمر</h3>
+<p id="moon-info"></p>
+<p class="next" id="moon-next"></p>
+</div>
+<div>
+<ul class="events" id="events"></ul>
+<p class="tonight-note">طور القمر محسوب تقريبيًا داخل الصفحة، وأحداث الشهر من <a href="https://www.farmersalmanac.com/?p=443870" target="_blank" rel="noopener noreferrer">Farmers' Almanac</a> ونشرة ناسا. مواعيد الذروة تقريبية.</p>
+</div>
+</div>
+</div></section>
+
 <section id="about"><div class="wrap">
 <h2>نبذة</h2>
 <div class="about">
@@ -219,6 +254,39 @@ document.querySelectorAll('.gallery figure').forEach(function(f){var m=f.querySe
 function open(){i.src=m.src;i.alt=m.alt;c.textContent=f.querySelector('figcaption').textContent;d.showModal()}
 m.addEventListener('click',open);m.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}})});
 d.addEventListener('click',function(e){if(e.target===d||e.target.tagName==='BUTTON')d.close()});
+})();
+</script>
+<script>
+(function(){
+var SYN=29.530588853,REF=Date.UTC(2000,0,6,18,14),MON=["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+var now=Date.now(),age=(((now-REF)/864e5)%SYN+SYN)%SYN,p=age/SYN,k=Math.cos(2*Math.PI*p),ill=(1-k)/2;
+var names=[[1.85,"محاق"],[5.54,"هلال متزايد"],[9.23,"تربيع أول"],[12.92,"أحدب متزايد"],[16.61,"بدر"],[20.3,"أحدب متناقص"],[23.99,"تربيع أخير"],[27.68,"هلال متناقص"],[99,"محاق"]];
+var nm=names.filter(function(n){return age<n[0]})[0][1];
+function fmt(t){var d=new Date(t+3*36e5);return d.getUTCDate()+" "+MON[d.getUTCMonth()]}
+function nextAt(target){var d=((target-age)%SYN+SYN)%SYN;return now+d*864e5}
+var r=56,rx=r*Math.abs(k),sw=k>0?0:1;
+var path="M60 "+(60-r)+" A "+r+" "+r+" 0 0 1 60 "+(60+r)+" A "+rx.toFixed(2)+" "+r+" 0 0 "+sw+" 60 "+(60-r)+" Z";
+document.getElementById("moon").innerHTML='<defs><radialGradient id="mg" cx="40%" cy="38%" r="75%"><stop offset="0" stop-color="#fffdf5"/><stop offset="1" stop-color="#cfc8e6"/></radialGradient></defs><circle cx="60" cy="60" r="56" fill="#17122e" stroke="rgba(130,110,220,.5)"/><path d="'+path+'" fill="url(#mg)"'+(p>=.5?' transform="translate(120 0) scale(-1 1)"':'')+'/>';
+document.getElementById("moon-name").textContent=nm;
+var dn=Math.floor(age),dt=dn<1?"أقل من يوم":dn==1?"يوم واحد":dn==2?"يومان":dn<=10?dn+" أيام":dn+" يومًا";
+document.getElementById("moon-info").textContent=(ill<.02?"لا يُرى الليلة":"يضيء نحو "+Math.round(ill*100)+"٪ من القرص")+"، وعمره "+dt;
+document.getElementById("moon-next").innerHTML="البدر القادم تقريبًا: "+fmt(nextAt(SYN/2))+"<br>المحاق القادم تقريبًا: "+fmt(nextAt(SYN));
+var t=new Date(now+3*36e5),today=Date.UTC(t.getUTCFullYear(),t.getUTCMonth(),t.getUTCDate());
+var E=[
+[[10,5],[10,5],"ذروة الثوريات الجنوبية","شهب بطيئة وقليلة العدد، لكنها تضم كرات نارية لامعة أحيانًا."],
+[[10,12],[10,12],"ذروة الثوريات الشمالية","ذروة هادئة، ويُستحسن الرصد بعيدًا عن أضواء المدينة."],
+[[10,15],[10,16],"المريخ والمشتري معًا قبل الفجر","يفصل بينهما نحو درجة واحدة في برج الأسد قرب النجم قلب الأسد. المشتري الأبيض الألمع، والمريخ مائل إلى الحمرة."],
+[[10,16],[10,17],"ذروة الأسديات (الليونيدز)","أفضل وقت للرصد من بعد منتصف الليل حتى الفجر، وتُرصد أيضًا قبل فجر 17 و18 نوفمبر."],
+[[10,24],[10,24],"اكتمال القمر: سوبرمون","يكتمل القمر نحو الساعة 5:53 مساءً بتوقيت الرياض، فيبدو أكبر وأسطع عند شروقه."]
+];
+var ul=document.getElementById("events"),y=2026,html="",shown=0;
+E.forEach(function(e){var a=Date.UTC(y,e[0][0],e[0][1]),b=Date.UTC(y,e[1][0],e[1][1]),cls="",chip;
+if(today>b){cls="past";chip="انتهى"}else if(today>=a){cls="now";chip="الليلة"}else{var n=Math.round((a-today)/864e5);chip=n==1?"غدًا":n==2?"بعد يومين":"بعد "+n+" أيام"}
+var ds=e[0][1]+(e[1][1]!==e[0][1]?"–"+e[1][1]:"")+" "+MON[e[0][0]];
+html+='<li class="'+cls+'"><b>'+e[2]+'</b><span class="chip">'+chip+'</span><div class="d">'+ds+'</div><p>'+e[3]+'</p></li>';
+if(cls!=="past")shown++});
+ul.innerHTML=html;
+if(!shown)ul.insertAdjacentHTML("afterbegin",'<li><b>لا أحداث قادمة مسجلة</b><p>انتهت أحداث هذه القائمة، وسيُضاف جديدها عند التحديث القادم للموقع.</p></li>');
 })();
 </script>
 </body>
