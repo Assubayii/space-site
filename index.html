@@ -124,7 +124,25 @@ dialog.lb button{background:none;border:0;color:var(--cyan);font:inherit;cursor:
 .tonight-note a{color:var(--cyan);text-underline-offset:4px}
 .entries .w{display:block;color:var(--cyan);font-size:14.5px}
 .entries .st{display:inline-block;margin-inline-start:12px;padding:0 10px;font-size:13px;border:1px solid var(--line);border-radius:999px;color:var(--mute)}
-@media (max-width:760px){.tonight{grid-template-columns:1fr;gap:28px}.mag{grid-template-columns:1fr}.story.top{padding:24px}nav{gap:16px;font-size:14px}.about{grid-template-columns:1fr}.hud{padding:32px 26px}.entries li{grid-template-columns:1fr;gap:4px}section{padding:54px 0}}
+.calc{border:1px solid var(--line);background:linear-gradient(135deg,rgba(109,51,201,.22),rgba(5,3,15,.4));padding:26px;margin-bottom:56px;clip-path:polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,22px 100%,0 calc(100% - 22px))}
+.calc h3{font-size:26px;margin-bottom:16px}
+.calc .row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.calc label{display:block;color:var(--cyan);font-size:14px;margin-bottom:4px}
+.calc select{width:100%;padding:11px 12px;font:inherit;font-size:16px;color:var(--star);background:var(--deep);border:1px solid var(--line);border-radius:0}
+.calc select option{background:var(--deep);color:var(--star)}
+.calc .out{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.calc .out small{display:block;color:var(--mute);font-size:14px}
+.calc .big{font-family:"Aref Ruqaa",serif;font-weight:700;font-size:clamp(34px,6vw,56px);line-height:1.3;color:var(--cyan);text-shadow:0 0 24px rgba(69,214,230,.45)}
+.calc .hint{margin:8px 0 0;color:var(--mute);font-size:15.5px;max-width:42em}
+.sub{font-size:30px;margin:0 0 6px}
+.films{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:22px;margin-top:22px}
+.film{padding:22px;border:1px solid var(--line);border-top:3px solid var(--c,var(--magenta));background:radial-gradient(120% 100% at 100% 0,rgba(109,51,201,.2),transparent 60%)}
+.film:nth-child(3n+2){--c:var(--cyan)}.film:nth-child(3n){--c:#9b7bff}
+.film h4{font-family:"Aref Ruqaa",serif;font-weight:700;font-size:25px;margin:0}
+.film .m{color:var(--mute);font-size:14px;margin-bottom:12px}
+.film dl{margin:0}.film dt{font-size:14px;color:var(--c);margin-top:10px}
+.film dd{margin:0;color:var(--star);font-size:15.5px;line-height:1.85}
+@media (max-width:760px){.calc .row{grid-template-columns:1fr}.calc{padding:20px}.tonight{grid-template-columns:1fr;gap:28px}.mag{grid-template-columns:1fr}.story.top{padding:24px}nav{gap:16px;font-size:14px}.about{grid-template-columns:1fr}.hud{padding:32px 26px}.entries li{grid-template-columns:1fr;gap:4px}section{padding:54px 0}}
 @media (prefers-reduced-motion:reduce){.hero h1{animation:none}html{scroll-behavior:auto}}
 </style>
 </head>
@@ -233,11 +251,34 @@ dialog.lb button{background:none;border:0;color:var(--cyan);font:inherit;cursor:
 
 <section id="deep"><div class="wrap">
 <h2>أعماق الكون</h2>
-<div class="deep">
-<div><h3>المجرات</h3><p>مدن من مئات المليارات من النجوم، نراها اليوم بضوء قديم جدًا.</p></div>
-<div><h3>السدم</h3><p>مصانع النجوم، حيث يتحول الغبار والغاز إلى شموس جديدة.</p></div>
-<div><h3>الكواكب</h3><p>جيراننا القريبون، وأسهل الأهداف لمن يبدأ الرصد.</p></div>
-<div><h3>أفلام الخيال العلمي</h3><p>تفتح الأسئلة، والرصد يساعدني على البحث عن إجاباتها.</p></div>
+<p class="gallery-note">المسافات في الفضاء أكبر من الخيال. اختر وجهة وسرعة، وانظر كم تستغرق الرحلة.</p>
+<div class="calc" id="calc">
+<h3>حاسبة الرحلة الفضائية</h3>
+<div class="row">
+<div><label for="dest">الوجهة</label><select id="dest">
+<option value="384400">القمر (384 ألف كم)</option>
+<option value="225e6">المريخ (225 مليون كم في المتوسط)</option>
+<option value="4.017e13" selected>أقرب نجم: بروكسيما قنطورس (4.2 سنة ضوئية)</option>
+<option value="2.46e17">مركز مجرة درب التبانة (نحو 26 ألف سنة ضوئية)</option>
+</select></div>
+<div><label for="spd">السرعة</label><select id="spd">
+<option value="0.25">طائرة ركاب (900 كم/س)</option>
+<option value="17" selected>المركبة فوياجر 1 (نحو 17 كم/ث)</option>
+<option value="29979">10٪ من سرعة الضوء</option>
+<option value="299792">سرعة الضوء</option>
+</select></div>
+</div>
+<div class="out" aria-live="polite"><small>زمن الرحلة</small><div class="big" id="trip"></div><p class="hint" id="hint"></p></div>
+</div>
+<h3 class="sub">ملفات الخيال العلمي</h3>
+<p class="gallery-note" style="margin-top:0">أفلام عن الفضاء، وما فيها من خيال وما فيها من علم.</p>
+<div class="films">
+<article class="film"><h4>2001: أوديسا الفضاء</h4><div class="m">1968، إخراج ستانلي كوبريك</div><dl><dt>في الفيلم</dt><dd>حاسوب ذكي اسمه HAL 9000 يتحكم في المركبة، ثم يخالف أوامر الطاقم.</dd><dt>في الواقع</dt><dd>تخيّل الفيلم محطة فضائية تدور حول نفسها لتصنع جاذبية صناعية، وهي فكرة يدرسها مهندسو الفضاء حتى اليوم.</dd></dl></article>
+<article class="film"><h4>تواصل (Contact)</h4><div class="m">1997، إخراج روبرت زيميكس، عن رواية كارل ساغان</div><dl><dt>في الفيلم</dt><dd>عالمة تلتقط رسالة من حضارة قرب النجم فيغا، ثم تُبنى آلة تنقلها إلى هناك.</dd><dt>في الواقع</dt><dd>البحث عن إشارات راديو من الفضاء حقيقي، ويقوم به معهد سيتي (SETI) منذ عقود.</dd></dl></article>
+<article class="film"><h4>بين النجوم (Interstellar)</h4><div class="m">2014، إخراج كريستوفر نولان</div><dl><dt>في الفيلم</dt><dd>رحلة عبر ثقب دودي بحثًا عن كوكب جديد يعيش عليه البشر.</dd><dt>في الواقع</dt><dd>شكل الثقب الأسود في الفيلم حُسب بمعادلات فيزيائية بإشراف الفيزيائي كيب ثورن، وتمدد الزمن قرب الأجرام الضخمة ظاهرة حقيقية مقيسة.</dd></dl></article>
+<article class="film"><h4>جاذبية (Gravity)</h4><div class="m">2013، إخراج ألفونسو كوارون</div><dl><dt>في الفيلم</dt><dd>حطام يضرب المكوك فتبقى رائدة فضاء تائهة في المدار.</dd><dt>في الواقع</dt><dd>حطام المدارات مشكلة حقيقية، ومتلازمة كيسلر تصف تصادمات متتابعة تضاعف الحطام حتى يصعب استخدام المدار.</dd></dl></article>
+<article class="film"><h4>المريخي (The Martian)</h4><div class="m">2015، إخراج ريدلي سكوت، عن رواية آندي وير</div><dl><dt>في الفيلم</dt><dd>رائد فضاء يُترك وحيدًا على المريخ فيعيش بالعلم والهندسة وزراعة البطاطس.</dd><dt>في الواقع</dt><dd>ساعدت ناسا في الفيلم، لكن عاصفة بدايته مبالغ فيها، فهواء المريخ رقيق جدًا ولا يحرك الأجسام بتلك القوة.</dd></dl></article>
+<article class="film"><h4>الوصول (Arrival)</h4><div class="m">2016، إخراج دوني فيلنوف</div><dl><dt>في الفيلم</dt><dd>كائنات فضائية تصل بسفن عملاقة، ويحاول العلماء فهم لغتها قبل فوات الأوان.</dd><dt>في الواقع</dt><dd>يستند الفيلم إلى فرضية أن اللغة قد تؤثر في طريقة تفكيرنا، وهي فرضية ما زالت محل جدل بين العلماء.</dd></dl></article>
 </div>
 </div></section>
 
@@ -308,6 +349,21 @@ html+='<li class="'+cls+'"><b>'+e[2]+'</b><span class="chip">'+chip+'</span><div
 if(cls!=="past")shown++});
 ul.innerHTML=html;
 if(!shown)ul.insertAdjacentHTML("afterbegin",'<li><b>لا أحداث قادمة مسجلة</b><p>انتهت أحداث هذه القائمة، وسيُضاف جديدها عند التحديث القادم للموقع.</p></li>');
+})();
+</script>
+<script>
+(function(){
+var d=document.getElementById("dest"),v=document.getElementById("spd"),o=document.getElementById("trip"),h=document.getElementById("hint");
+var U=[["ثانية","ثانيتان","ثوانٍ"],["دقيقة","دقيقتان","دقائق"],["ساعة","ساعتان","ساعات"],["يومًا","يومان","أيام"],["سنة","سنتان","سنوات"]],U1=["ثانية","دقيقة","ساعة","يوم","سنة"];
+function word(n,i){if(n%1)return U[i][0].replace("يومًا","يومًا");var r=Math.round(n);if(r==1)return U1[i];if(r==2)return U[i][1];if(r<=10)return U[i][2];return U[i][0]}
+function calc(){var km=+d.value,sec=km/+v.value,a=[1,60,3600,86400,31557600],i=0;
+if(sec<60)i=0;else if(sec<3600)i=1;else if(sec<86400)i=2;else if(sec<31557600)i=3;else i=4;
+var n=sec/a[i];n=n<10?Math.round(n*10)/10:Math.round(n);
+var t=n.toLocaleString("en");
+o.textContent=(n>=1?"نحو ":"")+t+" "+word(n,i);
+var light=+v.value>299000;
+h.textContent=light?"هذه أسرع سرعة ممكنة حسب الفيزياء المعروفة، ومع ذلك تبقى النجوم بعيدة. لهذا تلجأ الأفلام إلى الثقوب الدودية والسرعة الفائقة.":"جرّب سرعة الضوء لترى الحد الأقصى الذي تسمح به الفيزياء المعروفة.";}
+d.addEventListener("change",calc);v.addEventListener("change",calc);calc();
 })();
 </script>
 </body>
